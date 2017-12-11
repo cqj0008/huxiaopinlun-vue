@@ -1,0 +1,61 @@
+虎啸评论 (vue)
+
+1.index页面: 注册一个根元素id为app;引入相应的js文件,vue文件放在最前面,依次是最小的模块在最上面,app.js放在最底下;
+2.动态传递数据到子组件,左边是自己起的名字,右边是组件的data数据的属性名;
+3.index控制整个组件的展示
+
+app.js
+1.var vm = new Vue({el:'app',data:{数据源挂载}}) : // 最大的父组件,负责数据的全部来源,父组件与子组件data数据,子组件data是function 方式返回一个对象的挂载;
+
+comment.js
+1.分发模块
+2.props接收父组件传过来的数据,需要验证,type(类型)和设置default(默认值),多个属性的时候,用函数方式,return 返回一个对象;
+3.
+
+comment-contains.js
+1.v-for分发对象,在props接收父组件传过来的数据,再往下一个子组件传递数据
+2.在props可以设置当前的下标,设置类型和默认值
+
+comment-item.js
+1.在props接收父组件传过来的数据,在data中,return返回一个对象,子组件中的全局data必须是函数,用一个变量来接收当前的数据,(转换变量名,只能在该组件使用) twoindex:this.oneindex
+2.在computed里面计算下标,
+
+computed:{ // 计算下标,函数返回return
+     sanindex:function(){
+	return ++this.twoindex;
+ }
+3.利用下标判断当前层是不是第一层,显示与隐藏
+4.在methods里面实现开关: this.toggle = !this.toggle;
+5.子组件向父组件传递数据: @click(点击事件,把item对象数据放在括号里面传递过来) --> 在methods里面根据自己定义的名字接收数据,数据在()里面,用this.$emit('事件名',传递的数据) --> 在上一级父组件中@事件名="新的事件名" --> 在methods接收方法,括号里面是传递过来的参数
+6.获取当前的时间 let oDate = new Date();
+let time = `${oDate.getFullYear()}-${oDate.getMonth() + 1}-${oDate.getDate()}`;
+7.把数据添加到原来的数组当中 this.message.unshift({ // 把对象放进数组里面 })
+
+comment-post.js
+1.v-model="input",绑定的数据必须在全局data函数的注册
+2.点击发表的时候,触发一个事件,判断这个内容的长度,去除前后空格;
+3.设置延迟调用的时候,要用箭头函数,保证this的指向
+setTimeout(() => {
+     this.isReminde = false;
+},3000)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

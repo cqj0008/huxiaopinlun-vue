@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<link rel="stylesheet" type="text/css" href="01-ping.css"/>
+	</head>
+	<body>
+	<div id="app">
+		<comment :ping="ping">
+			
+		</comment>
+		<comment-post :nn="list"></comment-post>
+	</div>
+	</body>
+</html>
+<script src="vue.js" type="text/javascript" charset="utf-8"></script>
+<script src="datas.js" type="text/javascript" charset="utf-8"></script>
+
+<script type="text/javascript">
+	Vue.component('commentPost',{
+		template:`
+		<div>
+			<ul v-for ="item in nn">
+				<li>{{item.comments}}</li>
+			</ul>
+		
+		</div>
+		
+		`,
+		data:function (){
+			return {
+				
+			}
+		},
+		props:{
+			nn:{
+				type:Array,
+				default:[]
+			}
+		}
+		
+		
+	})
+	
+	Vue.component('comment',{
+		template:`
+		<div class="main_comment">
+			<h3>发表评论</h3>
+			<img src="images/1.jpg"/>
+			<span>Alex</span><br>
+			<input type="textarea" placeholder="客官,8字起评论,不讲价呀" v-model ="inputText" @keyup.enter="push_li"/><br>
+			<button @click="push_li">发表</button>
+			
+		</div>
+		
+		`,
+		data:function(){
+			return {
+				list : this.ping,
+				inputText:''
+			}
+		},
+		props:{
+			list:{
+				type:Array,
+				default:[]
+			}
+		},
+		methods:{
+			push_li(){
+				this.list.push({comments:this.inputText});
+			}
+		}
+	});
+	
+	
+	let vm = new Vue({
+		el:'#app',
+		data:{
+			ping
+		}
+		
+	})
+	
+	
+</script>
